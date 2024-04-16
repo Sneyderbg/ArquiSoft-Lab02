@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.udea</groupId>
-	<artifactId>lab2</artifactId>
+	<artifactId>ArquiSoft-Lab02</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lab2</name>
+	<name>ArquiSoft-Lab02</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 
