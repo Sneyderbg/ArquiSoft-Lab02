@@ -17,6 +17,7 @@
 	<properties>
 
 		<sonar.organization>sneyderbg</sonar.organization>
+		<sonar.projectKey>ArquiSoft-Lab02</sonar.projectKey>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
 
