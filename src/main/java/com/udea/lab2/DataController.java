@@ -1,6 +1,5 @@
 package com.udea.lab2;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
@@ -13,24 +12,24 @@ import java.util.Locale;
 public class DataController {
 
     @GetMapping("/")
-    public String healthCheck(){
+    public String healthCheck() {
         return "HEALTH CHECK OK!";
     }
 
     @GetMapping("/version")
-    public String version(){
+    public String version() {
         return "The actual version is 1.0.0";
     }
 
     @GetMapping("/nations")
-    public JsonNode getRandomnNations(){
+    public JsonNode getRandomnNations() {
         var objectMapper = new ObjectMapper();
         var faker = new Faker(new Locale("en-US"));
         var nations = objectMapper.createArrayNode();
-        for(var i=0;i<10;i++){
+        for (var i = 0; i < 10; i++) {
             var nation = faker.nation();
             nations.add(objectMapper.createObjectNode()
-                    .put("nationality",nation.nationality())
+                    .put("nationality", nation.nationality())
                     .put("capitalCity", nation.capitalCity())
                     .put("bandera", nation.flag())
                     .put("language", nation.language()));
@@ -40,25 +39,18 @@ public class DataController {
 
     }
 
-
     @GetMapping("/currencies")
-    public JsonNode getRandomnCurrencies(){
+    public JsonNode getRandomnCurrencies() {
         var objectMapper = new ObjectMapper();
         var faker = new Faker(new Locale("en-US"));
         var currencies = objectMapper.createArrayNode();
-        for(var i=0;i<20;i++){
+        for (var i = 0; i < 20; i++) {
             var currency = faker.currency();
             currencies.add(objectMapper.createObjectNode()
-                    .put("name",currency.name())
-                    .put("code", currency.code())
-                    );
+                    .put("name", currency.name())
+                    .put("code", currency.code()));
         }
         return currencies;
     }
-
-
-
-
-
 
 }

@@ -24,8 +24,8 @@ class Lab2ApplicationTests {
 
 	@Test
 	void nationLength() {
-		 Integer nationsLength = dataController.getRandomnNations().size();
-		 assertEquals(10, nationsLength);
+		Integer nationsLength = dataController.getRandomnNations().size();
+		assertEquals(10, nationsLength);
 	}
 
 	@Test
@@ -33,5 +33,5 @@ class Lab2ApplicationTests {
 		Integer currenciesLength = dataController.getRandomnCurrencies().size();
 		assertEquals(20, currenciesLength);
 	}
-	
+
 }
