@@ -1,13 +1,13 @@
 #Workflow name
 name: CI/CD Pipeline
 on:
-  pull_request: 
+  pull_request:
     branches: main
   #Manually trigger workflow runs
   workflow_dispatch:
   #Trigger the workflow on push from the main branch
   push:
-    
+
 jobs:
   #Test's job
   tests:
@@ -108,3 +108,36 @@ jobs:
           name: artifact
           #From this path
           path: target/ArquiSoft-Lab02-0.0.1-SNAPSHOT.jar
+  # Creates and publisher a docker image using the downloaded artifact
+  docker_image:
+    needs: build
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: artifact
+          path: /tmp/artifact
+      - name: Login to DockerHub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build Docker image
+        run: docker build -t Lab2Image .
+      - name: Publish image to DockerHub
+        run: docker push Lab2Image:latest
+  # Deploys the application to AWS
+  deploy_aws:
+    needs: docker_image
+    name: Deploy to AWS
+    # Instead of accessing the AWS instance from the runner, adding config to it and deploying. We are going to config the instance previously and just deploy the image.
+    # Information about how to configure the instance as a runner can be found on the "runners" section of Actions.
+    runs-on: [aws-ec2]
+    steps:
+      - name: Pull image from DockerHub
+        run: docker pull Lab2Image:latest
+      - name: Delete old container
+        run: docker rm -f ContainerLab2
+      - name: Run docker container
+        run: docker run -d -p 8080:8080 --name ContainerLab2 Lab2Image
