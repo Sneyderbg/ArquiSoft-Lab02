@@ -5,7 +5,7 @@ FROM amazoncorretto:17-alpine
 WORKDIR /app
 
 # Copy the downloaded jar artifact to the container
-COPY /tmp/artifact/ArquiSoft-Lab02-0.0.1-SNAPSHOT.jar /app/lab2.jar
+COPY tmp/artifact/ArquiSoft-Lab02-0.0.1-SNAPSHOT.jar /app/lab2.jar
 
 # Expose the port 8080
 EXPOSE 8080

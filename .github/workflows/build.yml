@@ -120,13 +120,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: artifact
-          path: /tmp/artifact
+          path: tmp/artifact
       - name: Login to DockerHub
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker image
-        run: docker build -t arquisoft .
+        run: docker build -t sneyderbg/arquisoft .
       - name: Publish image to DockerHub
-        run: docker push arquisoft:latest
+        run: docker push sneyderbg/arquisoft:latest
   # Deploys the application to AWS
   deploy_aws:
     needs: docker_image
@@ -136,8 +136,8 @@ jobs:
     runs-on: [aws-ec2]
     steps:
       - name: Pull image from DockerHub
-        run: docker pull arquisoft:latest
+        run: docker pull sneyderbg/arquisoft:latest
       - name: Delete old container
         run: docker rm -f ContainerLab2
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name ContainerLab2 arquisoft
+        run: docker run -d -p 8080:8080 --name ContainerLab2 sneyderbg/arquisoft
