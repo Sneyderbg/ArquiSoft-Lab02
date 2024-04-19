@@ -124,9 +124,9 @@ jobs:
       - name: Login to DockerHub
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker image
-        run: docker build -t Lab2Image .
+        run: docker build -t arquisoft .
       - name: Publish image to DockerHub
-        run: docker push Lab2Image:latest
+        run: docker push arquisoft:latest
   # Deploys the application to AWS
   deploy_aws:
     needs: docker_image
@@ -136,8 +136,8 @@ jobs:
     runs-on: [aws-ec2]
     steps:
       - name: Pull image from DockerHub
-        run: docker pull Lab2Image:latest
+        run: docker pull arquisoft:latest
       - name: Delete old container
         run: docker rm -f ContainerLab2
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name ContainerLab2 Lab2Image
+        run: docker run -d -p 8080:8080 --name ContainerLab2 arquisoft
